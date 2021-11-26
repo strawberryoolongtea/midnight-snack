@@ -1,38 +1,38 @@
 import logo from "./logo.svg";
 import "./App.css";
 import { useState } from "react";
+import menus from "./menuData";
 
 function App() {
   function getRandomIndex(len) {
     return Math.floor(Math.random() * len);
   }
-  const [menu, setMenu] = useState([
-    "곱창",
-    "족발",
-    "보쌈",
-    "치킨",
-    "피자",
-    "곱도리탕",
-    "떡볶이",
-    "닭강정",
-    "김치우동",
-    "라면",
-    "아이스크림",
-    "닭발",
-    "닭발",
-    "김치전",
-    "파전",
-    "골뱅이소면",
-    "닭꼬치",
-    "양꼬치",
-    "꿔바로우",
-    "오돌뼈",
-    "오뎅탕",
-    "낙곱새",
-  ]);
+
+  const [menu, setMenu] = useState(menus[getRandomIndex(menus.length)]);
+
+  const [hasClick, setHasClick] = useState(false);
+
+  function randomPick() {
+    setMenu(menus[getRandomIndex(menus.length)]);
+  }
+
+  function addMenu() {
+    setHasClick(!hasClick);
+  }
   return (
     <div className="container">
-      <div className="box">{menu[getRandomIndex(menu.length)]} 먹자!</div>
+      <div className="box">{menu} 먹자!</div>
+      <button onClick={randomPick}>말고 딴 거</button>
+
+      {hasClick ? (
+        <>
+          <input></input>
+          <button onClick={addMenu}>뒤로</button>
+          <button onClick={addMenu}>저장</button>
+        </>
+      ) : (
+        <button onClick={addMenu}>딴 거 추가</button>
+      )}
     </div>
   );
 }
